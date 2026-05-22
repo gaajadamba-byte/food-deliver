@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum FoodOrderStatus {
+  PENDING
+  CANCELED
+  COOKING
+  DELIVERING
+  DELIVERED
+}
+
+model User {
+  id           String      @id @default(uuid())
+  email        String      @unique
+  password     String
+  phoneNumber  String?
+  address      String?
+  role         UserRole    @default(USER)
+  isVerified   Boolean     @default(false)
+  ttl          DateTime? // last verification/reset token issue time
+  orders       FoodOrder[]
+  orderedFoods Food[]      @relation("UserOrderedFoods")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model FoodCategory {
+  id           String   @id @default(uuid())
+  categoryName String   @unique
+  foods        Food[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Food {
+  id          String          @id @default(uuid())
+  foodName    String
+  price       Float
+  image       String
+  ingredients String
+  categoryId  String
+  category    FoodCategory    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  orderItems  FoodOrderItem[]
+  orderedBy   User[]          @relation("UserOrderedFoods")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model FoodOrder {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalPrice     Float
+  status         FoodOrderStatus @default(PENDING)
+  foodOrderItems FoodOrderItem[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model FoodOrderItem {
+  id          String    @id @default(uuid())
+  foodId      String
+  food        Food      @relation(fields: [foodId], references: [id])
+  quantity    Int
+  foodOrderId String
+  foodOrder   FoodOrder @relation(fields: [foodOrderId], references: [id], onDelete: Cascade)
+}

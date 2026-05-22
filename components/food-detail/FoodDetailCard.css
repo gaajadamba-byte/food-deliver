@@ -1,0 +1,221 @@
+.food-detail-card {
+  display: flex;
+  width: 826px;
+  max-width: 100%;
+  height: 412px;
+  padding: 24px;
+  gap: 24px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 4px 6px -4px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Image ───────────────────────────────────────── */
+
+.food-detail-image-wrapper {
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background: #f3f4f6;
+}
+
+.food-detail-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e5e7eb;
+}
+
+/* ── Info panel ──────────────────────────────────── */
+
+.food-detail-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.food-detail-close-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.food-detail-close-btn {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid #e4e4e7;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.food-detail-close-btn:hover {
+  background: #f4f4f5;
+}
+
+/* ── Text block ──────────────────────────────────── */
+
+.food-detail-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: stretch;
+  flex: 1;
+  padding-top: 12px;
+}
+
+.food-detail-name {
+  color: #ef4444;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: -0.75px;
+  margin: 0;
+}
+
+.food-detail-description {
+  color: #09090b;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+}
+
+/* ── Price section ───────────────────────────────── */
+
+.food-detail-price-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-self: stretch;
+}
+
+.food-detail-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.food-detail-price-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1 0 0;
+}
+
+.food-detail-price-label {
+  color: #09090b;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.food-detail-price-value {
+  color: #09090b;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: -0.6px;
+}
+
+/* ── Quantity stepper ────────────────────────────── */
+
+.food-detail-quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.food-detail-qty-btn {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9999px;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.food-detail-qty-btn--outline {
+  border: 1px solid #e4e4e7;
+}
+
+.food-detail-qty-btn--filled {
+  border: 1px solid #09090b;
+}
+
+.food-detail-qty-btn:hover {
+  background: #f4f4f5;
+}
+
+.food-detail-qty-value {
+  color: #09090b;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ── Add to cart button ──────────────────────────── */
+
+.food-detail-add-btn {
+  display: flex;
+  height: 44px;
+  padding: 8px 32px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 9999px;
+  background: #18181b;
+  color: #fafafa;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s;
+}
+
+.food-detail-add-btn:hover {
+  background: #27272a;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .food-detail-card {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+  }
+
+  .food-detail-image-wrapper {
+    width: 100%;
+    height: 200px;
+    flex: none;
+  }
+}
