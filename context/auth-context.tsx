@@ -25,7 +25,7 @@ interface AuthContextValue {
   isLoading: boolean;
   isAuthenticated: boolean;
   isAdmin: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<User>;
   signUp: (input: SignUpInput) => Promise<{ message: string }>;
   verifyEmail: (token: string) => Promise<void>;
   signOut: () => void;
@@ -64,6 +64,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     tokenStore.setTokens(data.accessToken, data.refreshToken);
     persistUser(data.user);
     setUser(data.user);
+
+    // api.ts файлтай нийцүүлэх (admin_token гэж хадгалах)
+    if (typeof window !== "undefined") {
+      localStorage.setItem("admin_token", data.accessToken);
+    }
+
+    // AdminLayout (Server Component)-д зориулж күүки суулгах
+    // access_token гэдэг нэр нь AdminLayout дээрхтэй ижил байх ёстой
+    document.cookie = `access_token=${data.accessToken}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
+    return data.user;
   }, []);
 
   const signIn = useCallback(
@@ -73,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: { email, password },
         auth: false,
       });
-      applySession(data);
+      return applySession(data);
     },
     [applySession],
   );
@@ -102,6 +112,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     tokenStore.clear();
     persistUser(null);
     setUser(null);
+    localStorage.removeItem("admin_token");
+
+    // Күүкиг устгах (Sign out хийхэд)
+    document.cookie =
+      "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }, []);
 
   const updateUser = useCallback((next: User) => {

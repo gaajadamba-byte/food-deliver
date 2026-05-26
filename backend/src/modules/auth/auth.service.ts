@@ -34,8 +34,15 @@ function issueTokens(user: User) {
 }
 
 async function sendVerificationEmail(user: User) {
-  const token = signActionToken(user.id, "verify-email", env.VERIFY_TOKEN_EXPIRES_MIN);
-  await prisma.user.update({ where: { id: user.id }, data: { ttl: new Date() } });
+  const token = signActionToken(
+    user.id,
+    "verify-email",
+    env.VERIFY_TOKEN_EXPIRES_MIN,
+  );
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { ttl: new Date() },
+  });
 
   const link = `${env.CLIENT_URL}/verify-email?token=${token}`;
   await sendMail(
@@ -47,7 +54,9 @@ async function sendVerificationEmail(user: User) {
 }
 
 export async function signUp(input: SignUpInput) {
-  const existing = await prisma.user.findUnique({ where: { email: input.email } });
+  const existing = await prisma.user.findUnique({
+    where: { email: input.email },
+  });
   if (existing) {
     throw new AppError(409, "Email already registered");
   }
@@ -99,7 +108,10 @@ export async function verifyEmail(token: string) {
 
   const verifiedUser = user.isVerified
     ? user
-    : await prisma.user.update({ where: { id: user.id }, data: { isVerified: true } });
+    : await prisma.user.update({
+        where: { id: user.id },
+        data: { isVerified: true },
+      });
 
   // Log the user in straight after a successful verification.
   return issueTokens(verifiedUser);
@@ -110,7 +122,10 @@ export async function resendVerification(input: EmailInput) {
   if (user && !user.isVerified) {
     await sendVerificationEmail(user);
   }
-  return { message: "If that account exists and is unverified, a new link has been sent." };
+  return {
+    message:
+      "If that account exists and is unverified, a new link has been sent.",
+  };
 }
 
 export async function signIn(input: SignInInput) {
@@ -129,6 +144,14 @@ export async function signIn(input: SignInInput) {
   }
 
   return issueTokens(user);
+}
+
+export async function getMe(userId: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) {
+    throw new AppError(404, "User no longer exists");
+  }
+  return toSafeUser(user);
 }
 
 export async function refresh(refreshToken: string) {
@@ -152,8 +175,15 @@ export async function requestPasswordReset(input: EmailInput) {
 
   // Always respond the same way so we do not leak which emails are registered.
   if (user) {
-    const token = signActionToken(user.id, "reset-password", env.RESET_TOKEN_EXPIRES_MIN);
-    await prisma.user.update({ where: { id: user.id }, data: { ttl: new Date() } });
+    const token = signActionToken(
+      user.id,
+      "reset-password",
+      env.RESET_TOKEN_EXPIRES_MIN,
+    );
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { ttl: new Date() },
+    });
 
     const link = `${env.CLIENT_URL}/reset-password?token=${token}`;
     await sendMail(
@@ -166,7 +196,9 @@ export async function requestPasswordReset(input: EmailInput) {
     );
   }
 
-  return { message: "If that email is registered, a reset link has been sent." };
+  return {
+    message: "If that email is registered, a reset link has been sent.",
+  };
 }
 
 export async function verifyResetToken(token: string) {

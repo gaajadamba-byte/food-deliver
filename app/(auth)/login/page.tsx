@@ -37,8 +37,20 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      await signIn(email.trim(), password);
-      router.push("/");
+      const user = await signIn(email.trim(), password);
+      console.log("Logged in user:", user); // Debug хийхэд тусална
+
+      // Хэрэглэгчийн мэдээлэл nested байж болзошгүйг тооцох
+      const userData = user?.user || user;
+      const userRole =
+        userData?.role ||
+        JSON.parse(localStorage.getItem("food_user") || "{}").role;
+
+      if (userRole === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (err) {
       setError(
         err instanceof ApiError
