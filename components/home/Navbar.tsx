@@ -1,13 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { MapPin, Search, ShoppingCart, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import {
+  MapPin,
+  Search,
+  ShoppingCart,
+  User,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { useCart } from "@/context/cart-context";
 
 export function Navbar() {
-  const { user } = useAuth();
+  const { user, signOut, isAuthenticated } = useAuth();
   const { totalCount, openDrawer } = useCart();
+  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleSignOut = () => {
+    signOut();
+    setIsMenuOpen(false);
+    router.push("/");
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-black shadow-sm">
@@ -48,13 +65,52 @@ export function Navbar() {
             <Search className="h-5 w-5" />
           </button>
 
-          <Link
-            href={user ? "/orders" : "/login"}
-            aria-label={user ? "My orders" : "Sign in"}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e8432d] text-white hover:bg-[#d03a26] transition-colors"
-          >
-            <User className="h-4 w-4" />
-          </Link>
+          <div className="relative">
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="flex cursor-pointer items-center gap-2 rounded-full border border-gray-700 bg-gray-900 p-1 pr-3 transition-colors hover:bg-gray-800"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e8432d] text-xs font-bold text-white">
+                    {user?.email?.[0].toUpperCase()}
+                  </div>
+                  <span className="hidden text-sm font-medium text-gray-200 sm:block">
+                    {user?.email.split("@")[0]}
+                  </span>
+                  <ChevronDown size={14} className="text-gray-400" />
+                </button>
+
+                {isMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 overflow-hidden rounded-xl bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
+                    <Link
+                      href="/orders"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      <User size={16} />
+                      Миний захиалга
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut size={16} />
+                      Гарах
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Sign in"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e8432d] text-white hover:bg-[#d03a26] transition-colors"
+              >
+                <User className="h-4 w-4" />
+              </Link>
+            )}
+          </div>
 
           <button
             type="button"
@@ -69,12 +125,6 @@ export function Navbar() {
               </span>
             )}
           </button>
-
-          {user && (
-            <span className="hidden text-sm font-medium text-gray-700 sm:block">
-              {user.email.split("@")[0]}
-            </span>
-          )}
         </div>
       </div>
     </header>

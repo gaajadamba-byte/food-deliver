@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { AdminStatsCard } from "./AdminStatsCard";
 import { apiFetch } from "@/lib/api";
+import { ShoppingBag, Utensils, Layers } from "lucide-react";
 
 export const DashboardStats: React.FC = () => {
   const [foods, setFoods] = useState<number | null>(null);
@@ -32,12 +33,18 @@ export const DashboardStats: React.FC = () => {
         label="Total Orders"
         value={orders ?? "—"}
         tone="accent"
+        icon={<ShoppingBag size={24} />}
       />
-      <AdminStatsCard label="Total Foods" value={foods ?? "—"} />
+      <AdminStatsCard
+        label="Total Foods"
+        value={foods ?? "—"}
+        icon={<Utensils size={24} />}
+      />
       <AdminStatsCard
         label="Categories"
         value={categories ?? "—"}
         tone="positive"
+        icon={<Layers size={24} />}
       />
     </div>
   );

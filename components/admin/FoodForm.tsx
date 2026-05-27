@@ -167,7 +167,7 @@ export const FoodForm: React.FC<{
       <div>
         <button
           disabled={saving}
-          className="rounded bg-slate-800 px-4 py-2 text-white"
+          className="rounded bg-slate-800 px-4 py-2 text-white transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save"}
         </button>

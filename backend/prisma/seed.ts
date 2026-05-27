@@ -32,8 +32,10 @@ async function main() {
       data: items.map((item) => ({
         foodName: item.title,
         price: item.price,
-        // Request a web-sized image so the optimizer is not fed huge originals.
-        image: `${item.image}?w=800&q=80`,
+        // Хэрэв item.image 404 болвол ажиллах баталгаатай линк эсвэл placeholder тавих
+        image: item.image.startsWith("http")
+          ? `${item.image}?w=800&q=80`
+          : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
         ingredients: item.description,
         categoryId: category.id,
       })),

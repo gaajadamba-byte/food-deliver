@@ -82,7 +82,10 @@ export async function updateOrderStatus(id: string, status: FoodOrderStatus) {
 }
 
 /** Updates the status of many orders at once (admin). */
-export async function bulkUpdateOrderStatus(orderIds: string[], status: FoodOrderStatus) {
+export async function bulkUpdateOrderStatus(
+  orderIds: string[],
+  status: FoodOrderStatus,
+) {
   const result = await prisma.foodOrder.updateMany({
     where: { id: { in: orderIds } },
     data: { status },

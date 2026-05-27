@@ -63,7 +63,7 @@ export const FoodCategoryManager: React.FC = () => {
           placeholder="New category name"
           className="flex-1 rounded border px-3 py-2"
         />
-        <button className="rounded bg-slate-800 px-3 py-2 text-white">
+        <button className="rounded bg-slate-800 px-3 py-2 text-white transition-colors hover:bg-slate-700">
           Create
         </button>
       </form>
@@ -77,7 +77,7 @@ export const FoodCategoryManager: React.FC = () => {
             <span>{c.categoryName}</span>
             <div>
               <Link
-                className="mr-2 rounded bg-amber-500 px-2 py-1 text-white"
+                className="mr-2 cursor-pointer rounded bg-amber-500 px-2 py-1 text-white transition-colors hover:bg-amber-600"
                 href={`/admin/categories/${c.id}`}
               >
                 Edit
@@ -85,7 +85,7 @@ export const FoodCategoryManager: React.FC = () => {
               <button
                 type="button"
                 onClick={() => remove(c.id)}
-                className="rounded bg-red-500 px-2 py-1 text-white"
+                className="cursor-pointer rounded bg-red-500 px-2 py-1 text-white transition-colors hover:bg-red-600"
               >
                 Delete
               </button>

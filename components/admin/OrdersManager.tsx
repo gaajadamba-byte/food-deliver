@@ -59,13 +59,13 @@ export const OrdersManager: React.FC = () => {
         <div className="flex gap-2">
           <button
             onClick={() => bulkUpdate("COOKING")}
-            className="rounded bg-amber-500 px-3 py-2 text-white"
+            className="rounded bg-amber-500 px-3 py-2 text-white transition-colors hover:bg-amber-600"
           >
             Set Cooking
           </button>
           <button
             onClick={() => bulkUpdate("DELIVERING")}
-            className="rounded bg-sky-600 px-3 py-2 text-white"
+            className="rounded bg-sky-600 px-3 py-2 text-white transition-colors hover:bg-sky-700"
           >
             Set Delivering
           </button>
@@ -90,7 +90,7 @@ export const OrdersManager: React.FC = () => {
                 {o.status}
               </div>
               <Link
-                className="rounded bg-amber-500 px-3 py-1 text-white"
+                className="rounded bg-amber-500 px-3 py-1 text-white transition-colors hover:bg-amber-600"
                 href={`/admin/orders/${o.id}`}
               >
                 View

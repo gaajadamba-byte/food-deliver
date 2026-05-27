@@ -14,9 +14,11 @@ export default async function AdminLayout({
   // Server-side guard: read access token from cookie and validate with backend
   const cookieStore = await cookies();
   const cookie = cookieStore.get("access_token")?.value;
-  if (!cookie) {
-    redirect("/login");
-  }
+
+  if (!cookie) redirect("/login");
+
+  let shouldRedirectToHome = false;
+  let shouldRedirectToLogin = false;
 
   try {
     const apiUrl =
@@ -30,7 +32,7 @@ export default async function AdminLayout({
       const data = await res.json();
       const user = data.user || data;
       if (user?.role !== "ADMIN") {
-        redirect("/");
+        shouldRedirectToHome = true;
       }
     } else if (res.status === 404) {
       // Хэрэв /auth/me байхгүй бол түр алгасаад клиент талд (AdminGuard) шалгахыг зөвшөөрөх
@@ -38,11 +40,15 @@ export default async function AdminLayout({
         "AdminLayout: /auth/me route missing in backend, skipping server-side check.",
       );
     } else {
-      redirect("/login");
+      shouldRedirectToLogin = true;
     }
   } catch (err) {
-    redirect("/login");
+    console.error("Auth check failed:", err);
+    shouldRedirectToLogin = true;
   }
+
+  if (shouldRedirectToHome) redirect("/");
+  if (shouldRedirectToLogin) redirect("/login");
 
   // Nested layout — global CSS and Providers come from root `app/layout.tsx`.
   return (

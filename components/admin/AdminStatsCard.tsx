@@ -6,18 +6,26 @@ export const AdminStatsCard: React.FC<{
   label: string;
   value: number | string;
   tone?: "neutral" | "positive" | "accent";
-}> = ({ label, value, tone = "neutral" }) => {
+  icon?: React.ReactNode;
+}> = ({ label, value, tone = "neutral", icon }) => {
   const toneClass =
     tone === "positive"
-      ? "from-emerald-50 to-emerald-100 text-emerald-700"
+      ? "text-emerald-600 bg-emerald-50"
       : tone === "accent"
-        ? "from-amber-50 to-amber-100 text-amber-700"
-        : "from-slate-50 to-slate-100 text-slate-800";
+        ? "text-amber-600 bg-amber-50"
+        : "text-slate-600 bg-slate-50";
 
   return (
-    <div className={`rounded-lg p-4 shadow-sm bg-linear-to-br ${toneClass}`}>
-      <div className="text-sm text-slate-500">{label}</div>
-      <div className="mt-2 text-2xl font-semibold leading-tight">{value}</div>
+    <div className="flex items-center gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition-all hover:shadow-md">
+      <div
+        className={`flex h-12 w-12 items-center justify-center rounded-xl ${toneClass}`}
+      >
+        {icon}
+      </div>
+      <div>
+        <div className="text-sm font-medium text-slate-400">{label}</div>
+        <div className="text-2xl font-bold text-slate-900">{value}</div>
+      </div>
     </div>
   );
 };

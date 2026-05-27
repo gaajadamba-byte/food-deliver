@@ -5,7 +5,7 @@ async function request<T>(
   options: RequestInit = {},
 ): Promise<T> {
   const token =
-    typeof window !== "undefined" ? localStorage.getItem("admin_token") : null;
+    typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
 
   const headers = {
     "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const api = {
 
     const token =
       typeof window !== "undefined"
-        ? localStorage.getItem("admin_token")
+        ? localStorage.getItem("access_token")
         : null;
     const response = await fetch(`${BASE_URL}/upload`, {
       // Assuming /api/upload endpoint
@@ -65,6 +65,6 @@ export const api = {
 
   // Auth related
   login: <T>(body: any) =>
-    request<T>("/auth/login", { method: "POST", body: JSON.stringify(body) }),
+    request<T>("/auth/sign-in", { method: "POST", body: JSON.stringify(body) }),
   // Add other auth endpoints if needed, e.g., /auth/me, /auth/logout
 };
