@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 async function request<T>(
   endpoint: string,
@@ -13,7 +13,12 @@ async function request<T>(
     ...options.headers,
   };
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
+  // Ensure endpoint starts with / if BASE_URL is present
+  const url = endpoint.startsWith("http")
+    ? endpoint
+    : `${BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+
+  const response = await fetch(url, {
     ...options,
     headers,
   });
