@@ -10,6 +10,11 @@ type Order = {
   totalPrice: number;
   status: string;
   createdAt: string;
+  user?: {
+    email: string;
+    phoneNumber?: string;
+    address?: string;
+  };
 };
 
 export const OrdersManager: React.FC = () => {
@@ -80,7 +85,18 @@ export const OrdersManager: React.FC = () => {
           >
             <div>
               <div className="font-medium">Order {o.id}</div>
-              <div className="text-sm text-slate-500">User: {o.userId}</div>
+              <div className="mt-1 flex flex-col gap-0.5">
+                <div className="text-sm text-slate-700 font-medium">
+                  Хэрэглэгч: {o.user?.email || o.userId}
+                </div>
+                <div className="text-xs text-slate-500">
+                  {o.user?.phoneNumber && `📞 ${o.user.phoneNumber} | `} 📍{" "}
+                  {o.user?.address || "Хаяг тодорхойгүй"}
+                </div>
+                <div className="text-sm font-semibold text-amber-600">
+                  {o.totalPrice.toLocaleString()}₮
+                </div>
+              </div>
               <div className="text-sm text-slate-500">
                 {new Date(o.createdAt).toLocaleString()}
               </div>

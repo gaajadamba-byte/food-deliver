@@ -10,7 +10,6 @@ export default function HomePage() {
       <Navbar />
       <HeroBanner />
 
-      {/* Menu sections — loaded from the backend */}
       <main className="mx-auto w-full max-w-6xl px-4 pb-12">
         <MenuList />
       </main>

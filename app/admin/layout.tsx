@@ -11,7 +11,6 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Server-side guard: read access token from cookie and validate with backend
   const cookieStore = await cookies();
   const cookie = cookieStore.get("access_token")?.value;
 
@@ -35,7 +34,6 @@ export default async function AdminLayout({
         shouldRedirectToHome = true;
       }
     } else if (res.status === 404) {
-      // Хэрэв /auth/me байхгүй бол түр алгасаад клиент талд (AdminGuard) шалгахыг зөвшөөрөх
       console.warn(
         "AdminLayout: /auth/me route missing in backend, skipping server-side check.",
       );
