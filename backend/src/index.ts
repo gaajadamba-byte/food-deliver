@@ -1,6 +1,10 @@
 import { app } from "./app";
 import { env } from "./config/env";
 
-app.listen(env.PORT, () => {
-  console.log(`🚀 Food API running on http://localhost:${env.PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(env.PORT, () => {
+    console.log(`🚀 Food API running on http://localhost:${env.PORT}`);
+  });
+}
+
+export default app;
