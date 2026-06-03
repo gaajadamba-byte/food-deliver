@@ -31,5 +31,14 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "backend",
+    "food-deliver",
+    "auth.controller.ts",
+    "auth.routes.ts",
+    "api.ts",
+    "**/*.controller.ts",
+    "**/*.route.ts"
+  ]
 }

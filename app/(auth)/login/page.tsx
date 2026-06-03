@@ -40,8 +40,8 @@ export default function LoginPage() {
       const user = await signIn(email.trim(), password);
       console.log("Logged in user:", user); // Debug хийхэд тусална
 
-      // Хэрэглэгчийн мэдээлэл nested байж болзошгүйг тооцох
-      const userData = user?.user || user;
+      // useAuth.signIn нь `User`-ыг буцаана, nested `user` байхгүй
+      const userData = user;
       const userRole =
         userData?.role ||
         JSON.parse(localStorage.getItem("food_user") || "{}").role;
