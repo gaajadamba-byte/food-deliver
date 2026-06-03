@@ -28,8 +28,8 @@ function extractAccessToken(req: Request): string {
 }
 
 export const me = asyncHandler(
-  async (req: any, res: Response): Promise<void> => {
-    const userId = req.user?.userId; // Хэрэв req.user улайсан хэвээр байвал Request-ийг 'any' болгож түр засаж болно
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user?.userId;
     if (!userId) {
       throw new AppError(401, "User session not found");
     }
