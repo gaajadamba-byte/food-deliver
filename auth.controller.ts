@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { AppError } from "../utils/AppError";
-import * as authService from "./auth.service";
-import { verifyAccessToken } from "../utils/jwt";
-import { prisma } from "../lib/prisma";
-import { asyncHandler } from "../utils/asyncHandler";
+import { AppError } from "../../utils/AppError.js";
+import * as authService from "./auth.service.js";
+import { verifyAccessToken } from "../../utils/jwt.js";
+import { prisma } from "../../lib/prisma.js";
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
 /** Pulls a refresh token from the Authorization or x-refresh-token header. */
 function extractRefreshToken(req: Request): string {

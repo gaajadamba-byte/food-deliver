@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateBody } from "../middleware/validate.js";
+import { validateBody } from "../../middleware/validate.js";
 import * as controller from "./auth.controller.js";
 import { authenticate } from "../../middleware/auth.js";
 import {
