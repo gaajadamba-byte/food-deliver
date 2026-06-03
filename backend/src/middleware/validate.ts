@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import type { ZodType } from "zod";
-import { AppError } from "../utils/AppError";
+import { AppError } from "../utils/AppError.js";
 
 /** Validates and replaces `req.body` with the parsed result. */
 export const validateBody =

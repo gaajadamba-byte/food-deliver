@@ -1,9 +1,11 @@
 import type { NextFunction, Request, Response } from "express";
 import { MulterError } from "multer";
-import { AppError } from "../utils/AppError";
+import { AppError } from "../utils/AppError.js";
 
 export function notFound(req: Request, res: Response): void {
-  res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
+  res
+    .status(404)
+    .json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 }
 
 export function errorHandler(

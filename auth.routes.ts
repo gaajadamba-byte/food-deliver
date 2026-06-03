@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { validateBody } from "../middleware/validate";
-import * as controller from "./auth.controller";
-import { authenticate } from "../../middleware/auth";
+import { validateBody } from "../middleware/validate.js";
+import * as controller from "./auth.controller.js";
+import { authenticate } from "../../middleware/auth.js";
 import {
   emailSchema,
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "./auth.schema";
+} from "./auth.schema.js";
 
 export const authRouter = Router();
 
