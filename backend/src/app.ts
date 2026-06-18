@@ -10,7 +10,25 @@ import { uploadRouter } from "./modules/upload/upload.routes.js";
 
 export const app = express();
 
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+const allowedOrigins = [
+  env.CLIENT_URL,
+  "https://food-namxbauts-gaajadamba-bytes-projects.vercel.app",
+  "https://food-fy41lqbyw-gaajadamba-bytes-projects.vercel.app",
+  "https://food-l6n932abl-gaajadamba-bytes-projects.vercel.app",
+  "https://food-q5k6dlzbg-gaajadamba-bytes-projects.vercel.app",
+  "http://localhost:3000",
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
